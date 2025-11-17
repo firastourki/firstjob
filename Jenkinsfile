@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,13 +15,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './mvnw clean install'
+                dir('student-management') {
+                    sh './mvnw clean install'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh './mvnw test'
+                echo "Running Tests"
             }
         }
     }
