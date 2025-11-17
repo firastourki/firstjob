@@ -1,22 +1,22 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JAVA_HOME'
-        maven 'M2_HOME'
-    }
-
     stages {
-        stage('GIT') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/firastourki/firstjob.git'
+                git branch: 'main', url: 'https://github.com/firastourki/firstjob.git'
             }
         }
 
-        stage('Compile Stage') {
+        stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                sh './mvnw clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './mvnw test'
             }
         }
     }
